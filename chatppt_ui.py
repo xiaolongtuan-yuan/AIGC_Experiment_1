@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 from chatppt import ChatPPT
 
@@ -5,18 +7,11 @@ from chatppt import ChatPPT
 st.title("ChatPPT Generator")
 st.write("Generate a slide presentation using AI!")
 
-# User selects the AI model
-ai_model = st.selectbox("Select AI Model", ["openai", "ollama"])
-
 # Depending on the AI model, different inputs are required
-if ai_model == "openai":
-    api_key = st.text_input("Enter your OpenAI API Key")
-    ollama_url = None
-    ollama_model = None
-elif ai_model == "ollama":
-    ollama_url = st.text_input("Enter your Ollama URL", "http://localhost:11434")
-    ollama_model = st.text_input("Enter your Ollama Model", "llama3")
-    api_key = None
+
+api_key = os.getenv("OPENAI_KEY")
+ollama_url = None
+ollama_model = None
 
 # User inputs for the presentation
 topic = st.text_input("Enter the topic for the presentation")
@@ -29,7 +24,8 @@ generate_button = st.button("Generate Slide", disabled=False)
 # If the button is clicked, generate the Slide
 if generate_button:
     with st.spinner("Generating Slide..."):
-        chat_ppt = ChatPPT(ai_model, api_key, ollama_url, ollama_model)
+        print(f"api key:{api_key}")
+        chat_ppt = ChatPPT(api_key, ollama_url, ollama_model)
         try:
             ppt_content = chat_ppt.chatppt(topic, num_slides, language)
         except Exception as e:

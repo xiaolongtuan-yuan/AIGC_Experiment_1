@@ -1,3 +1,4 @@
+import os
 import re
 import openai
 import json
@@ -5,13 +6,13 @@ import argparse
 import time
 import random
 import datetime
-from ollama import Client
 from pptx import Presentation
 
+api_key = os.getenv("OPENAI_KEY")
+openai_endpoint = "https://api.aiproxy.io/v1"
 
 class ChatPPT:
-    def __init__(self, ai_model, api_key, ollama_url=None, ollama_model=None):
-        self.ai_model = ai_model
+    def __init__(self, api_key, ollama_url=None, ollama_model=None):
         self.api_key = api_key
         self.ollama_url = ollama_url
         self.ollama_model = ollama_model
@@ -81,18 +82,12 @@ class ChatPPT:
         ]
 
     def _get_content(self, messages):
-        if self.ai_model == "openai":
-            openai.api_key = self.api_key
-            completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo", messages=messages
-            )
-            return completion.choices[0].message.content
-        elif self.ai_model == "ollama":
-            if self.ollama_url is None:
-                raise Exception("Ollama URL is required when ai_model is 'ollama'")
-            client = Client(host=self.ollama_url)
-            response = client.chat(model=self.ollama_model, messages=messages)
-            return response["message"]["content"]
+        openai.api_key = self.api_key
+        openai.api_base = openai_endpoint
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo", messages=messages
+        )
+        return completion.choices[0].message.content
 
     def _parse_content(self, content):
         try:
@@ -163,7 +158,7 @@ class ChatPPT:
 
 def main():
     args = args_parser()
-    chat_ppt = ChatPPT(args.ai_model, args.api_key, args.ollama_url, args.ollama_model)
+    chat_ppt = ChatPPT(api_key)
     chat_ppt.robot_print("Hi, I am your PPT assistant.")
     ppt_content = chat_ppt.chatppt(args.topic, args.pages, args.language)
     chat_ppt.generate_ppt(ppt_content)
@@ -174,17 +169,7 @@ def args_parser():
         description="I am your PPT assistant, I can help to you generate PPT."
     )
     parser.add_argument(
-        "-m",
-        "--ai_model",
-        choices=["openai", "ollama"],
-        default="openai",
-        help="Select the AI model",
-    )
-    parser.add_argument(
         "-t", "--topic", type=str, required=True, help="Your topic name"
-    )
-    parser.add_argument(
-        "-k", "--api_key", type=str, default=".token", help="Your api key file path"
     )
     parser.add_argument(
         "-u",
@@ -212,13 +197,13 @@ def args_parser():
         "-l",
         "--language",
         choices=["cn", "en"],
-        default="en",
+        default="cn",
         required=False,
         help="Output language",
     )
     args = parser.parse_args()
-    if args.ai_model == "openai" and args.api_key == ".token":
-        parser.error("--api_key is required when ai_model is 'openai'")
+    if not api_key:
+        parser.error("OPENAI_KEY is not provide in system env")
     return args
 
 
