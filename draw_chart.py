@@ -24,16 +24,16 @@ def csv_Line_chart(title, csv_file):
     if len(df.columns) > 2:
         print("csv file has more than 2 columns, use the first column as x_lable, the second column as y_lable")
     plot_Line_chart(title, df.columns[0], df.columns[1], df[df.columns[0]], df[df.columns[1]],
-                    os.path.join("resources", title + ".jpg"))
-    return os.path.join("resources", title + ".jpg")
+                    os.path.join("images", title + ".jpg"))
+    return os.path.join("images", title + ".jpg")
 
 
 def csv_pie_chart(title, csv_file):
     df = pd.read_csv(csv_file)
     if len(df.columns) > 2:
         print("csv file has more than 2 columns, use the first column as label, the second column as size")
-    draw_pie_chart(title, list(df[df.columns[1]]), list(df[df.columns[0]]), os.path.join("resources", title + ".jpg"))
-    return os.path.join("resources", title + ".jpg")
+    draw_pie_chart(title, list(df[df.columns[1]]), list(df[df.columns[0]]), os.path.join("images", title + ".jpg"))
+    return os.path.join("images", title + ".jpg")
 
 
 def plot_Line_chart(title, x_lable, y_lable, x=['标签一', '标签二', '标签三', '标签四'], y=[10, 15, 7, 10], path=None):
@@ -111,5 +111,5 @@ def draw_pie_chart(title, data, label, path=None):
 
 
 if __name__ == '__main__':
-    # csv_Line_chart("3月营业额", "resources/march_revenue.csv")
+    # csv_Line_chart("3月营业额", "images/march_revenue.csv")
     csv_pie_chart("3月各房型销售情况", "files/march_room_revenue.csv")
