@@ -10,8 +10,7 @@ import openai
 import requests
 api_key = os.getenv("SERPAPI_KEY")
 if not api_key:
-    # raise ValueError("API密钥未找到，请在环境变量中设置'SERPAPI_KEY'。")
-    api_key = "b37bd2cf5a9a9f41ff18de9047e085e88e95b03617cef41b4ff3ad1d48c401a1"
+    raise ValueError("API密钥未找到，请在环境变量中设置'SERPAPI_KEY'。")
 def google_image_search(query, num_images, save_dir="images"):
     search_engine_id = 'google_images'
 
