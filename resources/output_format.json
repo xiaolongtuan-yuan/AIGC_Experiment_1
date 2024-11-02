@@ -1,0 +1,29 @@
+{
+    "title": "example title",
+    "pages": [
+        {
+            "type": "text", # text or chart
+            "title": "title for page 1",
+            "content": [
+                {
+                    "title": "title for bullet 1",
+                    "description": "detail for bullet 1"
+                },
+                {
+                    "title": "title for bullet 2",
+                    "description": "detail for bullet 2"
+                }
+            ]
+        },
+        {
+            "type": "chart",
+            "title": "title for page 2 (title of the data insights)",
+            "content": [
+                {
+                    "description": "description for data insights",
+                    "file_path": "file path of Data chart"  # must have, chart file path of the giving data insights
+                }
+            ]
+        }
+    ]
+}

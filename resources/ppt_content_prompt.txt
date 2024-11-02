@@ -1,0 +1,10 @@
+I am preparing a presentation on $topic.
+Please assist in generating an outline in JSON format, adhering to the specified format
+$output_format.
+if the page type is "chart", the parameters of content must have "description" and "file_path".
+The data and chart path are given below:
+$chart
+the file_path must be a valid path.
+The presentation should span $pages pages, with as many bullet points as possible. The content should be returned in $language_str.
+You must add content for each slide. For each slide, you must add at least 4 bullet.
+Please ensure the output is valid JSON match the RFC-8295 specification. Don't return any other message

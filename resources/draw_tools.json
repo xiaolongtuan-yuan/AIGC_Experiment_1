@@ -1,0 +1,42 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "csv_Line_chart",
+      "description": "读取csv数据，绘制折线图，比较序列数据变化趋势",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "图表中文标题"
+          },
+          "csv_file": {
+            "type": "string",
+            "description": "csv文件路径"
+          }
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "csv_pie_chart",
+      "description": "读取csv数据，绘制饼图，比较同类型数据占比",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "图表中文标题"
+          },
+          "csv_file": {
+            "type": "string",
+            "description": "csv文件路径"
+          }
+        }
+      }
+    }
+  }
+]
