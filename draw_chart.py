@@ -112,4 +112,4 @@ def draw_pie_chart(title, data, label, path=None):
 
 if __name__ == '__main__':
     # csv_Line_chart("3月营业额", "resources/march_revenue.csv")
-    csv_pie_chart("3月各房型销售情况", "resources/march_room_revenue.csv")
+    csv_pie_chart("3月各房型销售情况", "files/march_room_revenue.csv")
